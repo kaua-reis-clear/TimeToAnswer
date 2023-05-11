@@ -13,6 +13,7 @@ class AdminsBackoffice::AdminsController < AdminsBackofficeController
   def create
     @admin = Admin.new(params_admin)
     if @admin.save
+      AdminMailer.update_email(current_admin, @admin).deliver_now
       redirect_to admins_backoffice_admins_path, notice: "Administrador cadastrado com sucesso!"
     else
       render :new
